@@ -7,7 +7,7 @@ Beispiel
 Name: Luka
 
 
-Alter:4 Jahre
+Alter: 5 Monate 
 
 
 Wohnort: Hamburg
