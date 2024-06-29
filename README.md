@@ -1,0 +1,5 @@
+- [Installation](#installation)
+- [Verwendung](#verwendung)
+- [Projektstruktur](#projektstruktur)
+- [Contributing](#contributing)
+- [Lizenz](#lizenz)
