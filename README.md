@@ -11,4 +11,4 @@ Alter: 5 Monate
 Wohnort: Hamburg
 
 
-Das letzte mal gesehen vor 3 Tagen in der Hamburger 
+Das letzte mal gesehen vor 3 Tagen in der Hamburger Innenstadt
