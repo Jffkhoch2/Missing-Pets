@@ -9,10 +9,22 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     font-family: Arial, sans-serif;
     z-index: 1000;
+    width: 200px;
 }
 
 .blue-box p {
     margin: 0;
     font-size: 16px;
     text-align: center;
+}
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
 }
