@@ -78,3 +78,15 @@ p {
     font-size: 16px;
     line-height: 1.5;
 }
+
+.contact-box {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #b7002e;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+    font-size: 16px;
