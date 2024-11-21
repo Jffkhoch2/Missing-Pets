@@ -30,6 +30,13 @@
             margin: 10px 0;
             padding: 15px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .cat-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
         }
         .cat-card img {
             max-width: 100%;
@@ -72,20 +79,20 @@
         <h1>Vermisste Katzen</h1>
     </header>
     <div class="container">
-        <div class="cat-card">
+        <a href="molly-details.html" target="_blank" class="cat-card">
             <img src="katze1.jpg" alt="Bild der vermissten Katze">
             <h2>Molly</h2>
             <p><strong>Vermisst seit:</strong> 01. Juni 2024</p>
             <p><strong>Ort:</strong> Berlin</p>
             <p><strong>Beschreibung:</strong> Molly ist eine schwarz-weiße Katze, sehr zutraulich und trägt ein rotes Halsband.</p>
-        </div>
-        <div class="cat-card">
+        </a>
+        <a href="whiskers-details.html" target="_blank" class="cat-card">
             <img src="katze2.jpg" alt="Bild der vermissten Katze">
             <h2>Whiskers</h2>
             <p><strong>Vermisst seit:</strong> 05. Juni 2024</p>
             <p><strong>Ort:</strong> München</p>
             <p><strong>Beschreibung:</strong> Whiskers ist eine graue Katze mit grünen Augen, etwas scheu und ohne Halsband.</p>
-        </div>
+        </a>
 
         <!-- Kontaktbox -->
         <div class="contact-box">
