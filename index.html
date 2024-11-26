@@ -72,9 +72,60 @@
             bottom: 0;
             width: 100%;
         }
+        /* Modal Styles */
+        #termsModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #termsModal .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        #termsModal .modal-content h2 {
+            color: #ff6666;
+        }
+        #termsModal button {
+            background-color: #ff6666;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #termsModal button:hover {
+            background-color: #ff4444;
+        }
     </style>
 </head>
 <body>
+    <!-- Modal für AGB-Zustimmung -->
+    <div id="termsModal">
+        <div class="modal-content">
+            <h2>AGB und Datenschutzerklärung</h2>
+            <p>Um diese Website zu nutzen, müssen Sie unseren Allgemeinen Geschäftsbedingungen und unserer Datenschutzerklärung zustimmen.</p>
+            <textarea readonly style="width: 100%; height: 200px; margin: 10px 0;">
+[Hier die AGB und Datenschutzerklärung einfügen]
+            </textarea>
+            <label>
+                <input type="checkbox" id="acceptTerms"> Ich akzeptiere die AGB und die Datenschutzerklärung.
+            </label>
+            <br><br>
+            <button id="acceptButton" disabled>Weiter zur Website</button>
+        </div>
+    </div>
+
     <header>
         <h1>Vermisste Katzen</h1>
     </header>
@@ -97,12 +148,33 @@
         <!-- Kontaktbox -->
         <div class="contact-box">
             <h2>Fragen? Kontaktieren Sie uns!</h2>
-           <a href="https://example.com">Instagram</a>
+            <a href="https://example.com">Instagram</a>
             <p><strong>Email:</strong> <a href="mailto:missingpets.vermistekatzen@gmail.com">missingpets.vermistekatzen@gmail.com</a></p>
         </div>
     </div>
     <footer>
         <p>&copy; 2024 Vermisste Katzen. Alle Rechte vorbehalten.</p>
     </footer>
+
+    <script>
+        const termsModal = document.getElementById('termsModal');
+        const acceptButton = document.getElementById('acceptButton');
+        const acceptTerms = document.getElementById('acceptTerms');
+
+        // Zeige das Modal an, bis die AGB akzeptiert werden
+        window.onload = () => {
+            termsModal.style.display = 'flex';
+        };
+
+        // Aktivieren des Weiter-Buttons
+        acceptTerms.addEventListener('change', () => {
+            acceptButton.disabled = !acceptTerms.checked;
+        });
+
+        // Schließen des Modals und Anzeigen der Website
+        acceptButton.addEventListener('click', () => {
+            termsModal.style.display = 'none';
+        });
+    </script>
 </body>
 </html>
