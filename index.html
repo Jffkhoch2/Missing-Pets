@@ -3,65 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vermisste Katzen</title>
+    <title>Vermisste Katzen - AGB Zustimmung</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f9f9f9;
-            position: relative;
             min-height: 100vh;
         }
         header {
             background-color: #ff6666;
             color: white;
-            padding: 10px 0;
+            padding: 15px 0;
             text-align: center;
-        }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-        }
-        .cat-card {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin: 10px 0;
-            padding: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        .cat-card:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            cursor: pointer;
-        }
-        .cat-card img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-        .cat-card h2 {
-            margin: 10px 0;
-        }
-        .cat-card p {
-            margin: 5px 0;
-        }
-        .contact-box {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .contact-box h2 {
-            color: #ff6666;
-        }
-        .contact-box p {
-            margin: 10px 0;
         }
         footer {
             text-align: center;
@@ -80,7 +35,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -89,12 +44,22 @@
             background: white;
             padding: 20px;
             border-radius: 10px;
-            width: 80%;
+            width: 90%;
             max-width: 600px;
-            text-align: center;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         #termsModal .modal-content h2 {
             color: #ff6666;
+        }
+        #termsModal textarea {
+            width: 100%;
+            height: 200px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+            padding: 10px;
         }
         #termsModal button {
             background-color: #ff6666;
@@ -107,113 +72,58 @@
         #termsModal button:hover {
             background-color: #ff4444;
         }
+        #termsModal label {
+            display: block;
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
     <!-- Modal für AGB-Zustimmung -->
     <div id="termsModal">
         <div class="modal-content">
-            <h2>AGB und Datenschutzerklärung</h2>
-            <p>Um diese Website zu nutzen, müssen Sie unseren Allgemeinen Geschäftsbedingungen und unserer Datenschutzerklärung zustimmen.</p>
-            <textarea readonly style="width: 100%; height: 200px; margin: 10px 0;">
-[Allgemeine Geschäftsbedingungen (AGB)
-1. Einleitung
+            <h2>Allgemeine Geschäftsbedingungen und Datenschutz</h2>
+            <p>Bitte lesen Sie unsere Allgemeinen Geschäftsbedingungen (AGB) und die Datenschutzerklärung, bevor Sie die Website nutzen.</p>
+            <textarea readonly>
+Allgemeine Geschäftsbedingungen (AGB)
+------------------------------------
+1. Nutzung der Website:
+   Diese Website dient ausschließlich dem Zweck, vermisste Haustiere zu melden und zu suchen.
+   Jegliche missbräuchliche Nutzung ist verboten.
 
-Willkommen auf [Name der Website]. Mit der Nutzung dieser Website erklären Sie sich mit den folgenden Bedingungen einverstanden. Bitte lesen Sie diese sorgfältig durch, bevor Sie fortfahren.
-2. Nutzung der Website
+2. Haftung:
+   Der Betreiber übernimmt keine Haftung für die Genauigkeit der bereitgestellten Informationen.
 
-2.1 Diese Website dient [Zweck der Website, z. B. zur Bereitstellung von Informationen].
-2.2 Der Zugriff auf die Website kann die Erhebung bestimmter Daten beinhalten (siehe Datenschutzerklärung). Mit der Nutzung erklären Sie sich mit dieser Praxis einverstanden.
-3. Haftungsausschluss
+3. Änderungen:
+   Der Betreiber behält sich das Recht vor, diese AGB jederzeit zu ändern.
 
-3.1 Der Betreiber übernimmt keine Verantwortung für etwaige Schäden, die durch die Nutzung dieser Website entstehen könnten.
-3.2 Links zu externen Websites liegen außerhalb unserer Kontrolle, und wir sind nicht verantwortlich für deren Inhalte.
-4. Datenschutz
-
-Die Verarbeitung personenbezogener Daten, insbesondere der IP-Adresse, erfolgt in Übereinstimmung mit unserer Datenschutzerklärung.
-5. Zustimmung zu den Bedingungen
-
-Durch die Nutzung der Website und das Akzeptieren dieser Bedingungen erklären Sie sich ausdrücklich mit der Erhebung und Verarbeitung der Daten gemäß der Datenschutzerklärung einverstanden.
 Datenschutzerklärung
-1. Verantwortlicher
+---------------------
+1. Erhobene Daten:
+   Wir erfassen Ihre IP-Adresse, um den Zugriff auf die Website zu überwachen.
 
-Verantwortlich für die Datenverarbeitung:
-[Dein Name oder Firmenname]
-[Deine Kontaktadresse]
-[Deine E-Mail-Adresse]
-2. Welche Daten wir erheben
+2. Verwendung der Daten:
+   Ihre Daten werden ausschließlich für technische und sicherheitsrelevante Zwecke verwendet.
 
-Bei jedem Besuch auf unserer Website werden automatisch folgende Informationen erfasst:
+3. Ihre Rechte:
+   Sie können jederzeit Auskunft über Ihre gespeicherten Daten anfordern oder deren Löschung beantragen.
 
-    IP-Adresse
-    Datum und Uhrzeit des Zugriffs
-    Browsertyp und Version
-    Betriebssystem
-
-3. Zweck der Datenerhebung
-
-Die erhobenen Daten werden für folgende Zwecke verwendet:
-
-    Bereitstellung und Sicherheit der Website
-    Statistische Auswertung und Verbesserung der Website
-    Benachrichtigung über Zugriffe (IP-Weiterleitung an unseren Discord-Bot)
-
-4. Speicherung der Daten
-
-Die erfassten Daten werden sicher gespeichert und nicht an Dritte weitergegeben, außer wenn dies gesetzlich vorgeschrieben ist.
-5. Weiterleitung an Discord
-
-Die IP-Adresse wird automatisiert an unseren Discord-Server weitergeleitet, um [Grund nennen, z. B. Monitoring oder Benachrichtigung] zu ermöglichen.
-6. Zustimmung
-
-Bevor Ihre Daten verarbeitet werden, müssen Sie den Bedingungen dieser Datenschutzerklärung zustimmen. Andernfalls können Sie die Website nicht nutzen.
-7. Ihre Rechte
-
-Sie haben das Recht:
-
-    Auskunft über Ihre gespeicherten Daten zu verlangen.
-    Die Löschung Ihrer Daten zu beantragen.
-    Die Verarbeitung Ihrer Daten einzuschränken oder zu widersprechen.
-
-Bitte kontaktieren Sie uns unter [Deine E-Mail-Adresse], wenn Sie eines dieser Rechte ausüben möchten.
-Einwilligung
-
-Um fortzufahren, müssen Sie ausdrücklich zustimmen, dass Ihre IP-Adresse und andere Daten gemäß den oben genannten Bedingungen verarbeitet werden.
-
-[ ]
+Durch Ihre Zustimmung erklären Sie sich mit den oben genannten Bedingungen einverstanden.
             </textarea>
             <label>
                 <input type="checkbox" id="acceptTerms"> Ich akzeptiere die AGB und die Datenschutzerklärung.
             </label>
-            <br><br>
             <button id="acceptButton" disabled>Weiter zur Website</button>
         </div>
     </div>
 
+    <!-- Hauptinhalt der Website -->
     <header>
         <h1>Vermisste Katzen</h1>
     </header>
-    <div class="container">
-        <a href="molly-details.html" target="_blank" class="cat-card">
-            <img src="katze1.jpg" alt="Bild der vermissten Katze">
-            <h2>Molly</h2>
-            <p><strong>Vermisst seit:</strong> 01. Juni 2024</p>
-            <p><strong>Ort:</strong> Berlin</p>
-            <p><strong>Beschreibung:</strong> Molly ist eine schwarz-weiße Katze, sehr zutraulich und trägt ein rotes Halsband.</p>
-        </a>
-        <a href="whiskers-details.html" target="_blank" class="cat-card">
-            <img src="katze2.jpg" alt="Bild der vermissten Katze">
-            <h2>Whiskers</h2>
-            <p><strong>Vermisst seit:</strong> 05. Juni 2024</p>
-            <p><strong>Ort:</strong> München</p>
-            <p><strong>Beschreibung:</strong> Whiskers ist eine graue Katze mit grünen Augen, etwas scheu und ohne Halsband.</p>
-        </a>
-
-        <!-- Kontaktbox -->
-        <div class="contact-box">
-            <h2>Fragen? Kontaktieren Sie uns!</h2>
-            <a href="https://example.com">Instagram</a>
-            <p><strong>Email:</strong> <a href="mailto:missingpets.vermistekatzen@gmail.com">missingpets.vermistekatzen@gmail.com</a></p>
+    <div id="content" style="display: none;">
+        <div class="container">
+            <p>Willkommen auf unserer Website! Hier können Sie nach vermissten Katzen suchen oder eine Katze als vermisst melden.</p>
         </div>
     </div>
     <footer>
@@ -224,20 +134,22 @@ Um fortzufahren, müssen Sie ausdrücklich zustimmen, dass Ihre IP-Adresse und a
         const termsModal = document.getElementById('termsModal');
         const acceptButton = document.getElementById('acceptButton');
         const acceptTerms = document.getElementById('acceptTerms');
+        const content = document.getElementById('content');
 
-        // Zeige das Modal an, bis die AGB akzeptiert werden
+        // Modal anzeigen
         window.onload = () => {
             termsModal.style.display = 'flex';
         };
 
-        // Aktivieren des Weiter-Buttons
+        // Aktivieren des Weiter-Buttons, wenn das Kontrollkästchen markiert wird
         acceptTerms.addEventListener('change', () => {
             acceptButton.disabled = !acceptTerms.checked;
         });
 
-        // Schließen des Modals und Anzeigen der Website
+        // Schließen des Modals und Anzeigen des Inhalts
         acceptButton.addEventListener('click', () => {
             termsModal.style.display = 'none';
+            content.style.display = 'block';
         });
     </script>
 </body>
