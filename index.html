@@ -109,121 +109,127 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>Vermisste Katzen</h1>
-    </header>
 
-    <div class="container" id="catContainer">
-        <!-- Dynamische Katzenkarten werden hier eingefügt -->
-    </div>
+<header>
+    <h1>Vermisste Katzen</h1>
+</header>
 
-    <div class="container">
-        <button id="addButton">Hinzufügen</button>
-        <button id="deleteAllButton" style="display: none;">Alle löschen</button>
-    </div>
+<div class="container" id="catContainer">
+    <!-- Hier erscheinen die Karten -->
+</div>
 
-    <div id="inputContainer">
-        <input type="text" id="catNameInput" placeholder="Name der Katze">
-        <input type="text" id="catDescriptionInput" placeholder="Beschreibung">
-        <input type="file" id="catImageInput">
-        <button id="finishButton">Fertig</button>
-    </div>
+<div class="container">
+    <button id="addButton">Hinzufügen</button>
+</div>
 
-    <div class="contact-box">
-        <h2>Fragen? Kontaktieren Sie uns!</h2>
-        <p><strong>Telefon:</strong> +49 12345678910</p>
-        <p><strong>Email:</strong> <a href="mailto:missingpets.vermistekatzen@gmail.com">missingpets.vermistekatzen@gmail.com</a></p>
-    </div>
+<div id="inputContainer">
+    <input type="text" id="catNameInput" placeholder="Name der Katze">
+    <input type="text" id="catDescriptionInput" placeholder="Beschreibung">
+    <input type="file" id="catImageInput">
+    <button id="finishButton">Fertig</button>
+</div>
 
-    <footer>
-        <p>&copy; 2024 Vermisste Katzen. Alle Rechte vorbehalten.</p>
-    </footer>
+<div class="contact-box">
+    <h2>Fragen? Kontaktieren Sie uns!</h2>
+    <p><strong>Telefon:</strong> +49 12345678910</p>
+    <p><strong>Email:</strong> <a href="mailto:missingpets.vermistekatzen@gmail.com">missingpets.vermistekatzen@gmail.com</a></p>
+</div>
 
-    <script>
-        const ownerPassword = "admin123"; // Passwort für den Inhaber
+<div class="container">
+    <button id="deleteAllButton" style="display: none;">Alle löschen</button>
+</div>
 
-        document.addEventListener('DOMContentLoaded', function() {
-            loadCatsFromLocalStorage();
-            checkOwnerAccess();
+<footer>
+    <p>&copy; 2024 Vermisste Katzen. Alle Rechte vorbehalten.</p>
+</footer>
+
+<script>
+    const ownerPassword = "admin123"; // Passwort für den Inhaber
+
+    document.addEventListener('DOMContentLoaded', function() {
+        loadCatsFromLocalStorage();
+        checkOwnerAccess();
+    });
+
+    function addCatCard(name, description, image) {
+        const catContainer = document.getElementById('catContainer');
+        const newCatCard = document.createElement('div');
+        newCatCard.classList.add('cat-card');
+        newCatCard.innerHTML = `
+            <img src="${image}" alt="Bild der vermissten Katze">
+            <h2>${name}</h2>
+            <p>${description}</p>
+            <button class="delete-button">Löschen</button>
+        `;
+        catContainer.appendChild(newCatCard);
+
+        newCatCard.querySelector('.delete-button').addEventListener('click', function() {
+            newCatCard.remove();
+            deleteCatFromLocalStorage(name);
         });
+    }
 
-        function addCatCard(name, description, image) {
-            const catContainer = document.getElementById('catContainer');
-            const newCatCard = document.createElement('div');
-            newCatCard.classList.add('cat-card');
-            newCatCard.innerHTML = `
-                <img src="${image}" alt="Bild der vermissten Katze">
-                <h2>${name}</h2>
-                <p>${description}</p>
-                <button class="delete-button">Löschen</button>
-            `;
-            catContainer.appendChild(newCatCard);
+    function saveCatToLocalStorage(name, description, image) {
+        let cats = JSON.parse(localStorage.getItem('cats')) || [];
+        cats.push({ name, description, image });
+        localStorage.setItem('cats', JSON.stringify(cats));
+    }
 
-            newCatCard.querySelector('.delete-button').addEventListener('click', function() {
-                newCatCard.remove();
-                deleteCatFromLocalStorage(name);
-            });
+    function loadCatsFromLocalStorage() {
+        const cats = JSON.parse(localStorage.getItem('cats')) || [];
+        cats.forEach(cat => addCatCard(cat.name, cat.description, cat.image));
+    }
+
+    function deleteCatFromLocalStorage(name) {
+        let cats = JSON.parse(localStorage.getItem('cats'));
+        cats = cats.filter(cat => cat.name !== name);
+        localStorage.setItem('cats', JSON.stringify(cats));
+    }
+
+    function checkOwnerAccess() {
+        const password = prompt("Bitte geben Sie das Passwort ein, um Löschrechte zu erhalten:");
+        if (password === ownerPassword) {
+            document.querySelectorAll('.delete-button').forEach(button => button.style.display = 'inline-block');
+            document.getElementById('deleteAllButton').style.display = 'block';
+            alert("Löschrechte aktiviert.");
+        } else {
+            alert("Falsches Passwort. Kein Zugriff auf Löschfunktionen.");
         }
+    }
 
-        function saveCatToLocalStorage(name, description, image) {
-            let cats = JSON.parse(localStorage.getItem('cats')) || [];
-            cats.push({ name, description, image });
-            localStorage.setItem('cats', JSON.stringify(cats));
+    document.getElementById('addButton').addEventListener('click', function() {
+        document.getElementById('inputContainer').style.display = 'block';
+        document.getElementById('addButton').style.display = 'none';
+    });
+
+    document.getElementById('finishButton').addEventListener('click', function() {
+        const name = document.getElementById('catNameInput').value;
+        const description = document.getElementById('catDescriptionInput').value;
+        const imageFile = document.getElementById('catImageInput').files[0];
+
+        if (name && description && imageFile) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const image = e.target.result;
+                addCatCard(name, description, image);
+                saveCatToLocalStorage(name, description, image);
+            };
+            reader.readAsDataURL(imageFile);
+        } else {
+            alert("Bitte alle Felder ausfüllen und ein Bild hochladen.");
         }
+    });
 
-        function loadCatsFromLocalStorage() {
-            const cats = JSON.parse(localStorage.getItem('cats')) || [];
-            cats.forEach(cat => addCatCard(cat.name, cat.description, cat.image));
-        }
+    document.getElementById('deleteAllButton').addEventListener('click', function() {
+        localStorage.clear();
+        document.getElementById('catContainer').innerHTML = '';
+        alert('Alle Einträge wurden gelöscht!');
+    });
+</script>
 
-        function deleteCatFromLocalStorage(name) {
-            let cats = JSON.parse(localStorage.getItem('cats'));
-            cats = cats.filter(cat => cat.name !== name);
-            localStorage.setItem('cats', JSON.stringify(cats));
-        }
-
-        function checkOwnerAccess() {
-            const password = prompt("Bitte geben Sie das Passwort ein, um Löschrechte zu erhalten:");
-            if (password === ownerPassword) {
-                document.querySelectorAll('.delete-button').forEach(button => button.style.display = 'inline-block');
-                document.getElementById('deleteAllButton').style.display = 'block';
-                alert("Löschrechte aktiviert.");
-            } else {
-                alert("Falsches Passwort. Kein Zugriff auf Löschfunktionen.");
-            }
-        }
-
-        document.getElementById('deleteAllButton').addEventListener('click', function() {
-            localStorage.clear();
-            document.getElementById('catContainer').innerHTML = '';
-            alert('Alle Einträge wurden gelöscht!');
-        });
-
-        document.getElementById('addButton').addEventListener('click', function() {
-            document.getElementById('inputContainer').style.display = 'block';
-            document.getElementById('addButton').style.display = 'none';
-        });
-
-        document.getElementById('finishButton').addEventListener('click', function() {
-            const name = document.getElementById('catNameInput').value;
-            const description = document.getElementById('catDescriptionInput').value;
-            const imageFile = document.getElementById('catImageInput').files[0];
-
-            if (name && description && imageFile) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const image = e.target.result;
-                    addCatCard(name, description, image);
-                    saveCatToLocalStorage(name, description, image);
-                };
-                reader.readAsDataURL(imageFile);
-            } else {
-                alert("Bitte alle Felder ausfüllen und ein Bild hochladen.");
-            }
-        });
-    </script>
 </body>
 </html>
+
 
 
 
