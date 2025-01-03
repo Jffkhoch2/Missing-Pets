@@ -48,6 +48,19 @@
         .cat-card p {
             margin: 5px 0;
         }
+        .delete-button {
+            background-color: #ff6666;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none; /* Standardmäßig verstecken */
+        }
+        .delete-button:hover {
+            background-color: #cc0000;
+        }
         .contact-box {
             background-color: white;
             border: 1px solid #ddd;
@@ -101,24 +114,12 @@
     </header>
 
     <div class="container" id="catContainer">
-        <a href="molly-details.html" target="_blank" class="cat-card">
-            <img src="katze1.jpg" alt="Bild der vermissten Katze">
-            <h2>Molly</h2>
-            <p><strong>Vermisst seit:</strong> 01. Juni 2024</p>
-            <p><strong>Ort:</strong> Berlin</p>
-            <p><strong>Beschreibung:</strong> Molly ist eine schwarz-weiße Katze, sehr zutraulich und trägt ein rotes Halsband.</p>
-        </a>
-        <a href="whiskers-details.html" target="_blank" class="cat-card">
-            <img src="katze2.jpg" alt="Bild der vermissten Katze">
-            <h2>Whiskers</h2>
-            <p><strong>Vermisst seit:</strong> 05. Juni 2024</p>
-            <p><strong>Ort:</strong> München</p>
-            <p><strong>Beschreibung:</strong> Whiskers ist eine graue Katze mit grünen Augen, etwas scheu und ohne Halsband.</p>
-        </a>
+        <!-- Dynamische Katzenkarten werden hier eingefügt -->
     </div>
 
-    <div style="text-align: center;">
+    <div class="container">
         <button id="addButton">Hinzufügen</button>
+        <button id="deleteAllButton" style="display: none;">Alle löschen</button>
     </div>
 
     <div id="inputContainer">
@@ -139,12 +140,64 @@
     </footer>
 
     <script>
-        window.onload = function() {
-            if (localStorage.getItem('cats')) {
-                const cats = JSON.parse(localStorage.getItem('cats'));
-                cats.forEach(cat => addCatCard(cat.name, cat.description, cat.image));
+        const ownerPassword = "admin123"; // Passwort für den Inhaber
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCatsFromLocalStorage();
+            checkOwnerAccess();
+        });
+
+        function addCatCard(name, description, image) {
+            const catContainer = document.getElementById('catContainer');
+            const newCatCard = document.createElement('div');
+            newCatCard.classList.add('cat-card');
+            newCatCard.innerHTML = `
+                <img src="${image}" alt="Bild der vermissten Katze">
+                <h2>${name}</h2>
+                <p>${description}</p>
+                <button class="delete-button">Löschen</button>
+            `;
+            catContainer.appendChild(newCatCard);
+
+            newCatCard.querySelector('.delete-button').addEventListener('click', function() {
+                newCatCard.remove();
+                deleteCatFromLocalStorage(name);
+            });
+        }
+
+        function saveCatToLocalStorage(name, description, image) {
+            let cats = JSON.parse(localStorage.getItem('cats')) || [];
+            cats.push({ name, description, image });
+            localStorage.setItem('cats', JSON.stringify(cats));
+        }
+
+        function loadCatsFromLocalStorage() {
+            const cats = JSON.parse(localStorage.getItem('cats')) || [];
+            cats.forEach(cat => addCatCard(cat.name, cat.description, cat.image));
+        }
+
+        function deleteCatFromLocalStorage(name) {
+            let cats = JSON.parse(localStorage.getItem('cats'));
+            cats = cats.filter(cat => cat.name !== name);
+            localStorage.setItem('cats', JSON.stringify(cats));
+        }
+
+        function checkOwnerAccess() {
+            const password = prompt("Bitte geben Sie das Passwort ein, um Löschrechte zu erhalten:");
+            if (password === ownerPassword) {
+                document.querySelectorAll('.delete-button').forEach(button => button.style.display = 'inline-block');
+                document.getElementById('deleteAllButton').style.display = 'block';
+                alert("Löschrechte aktiviert.");
+            } else {
+                alert("Falsches Passwort. Kein Zugriff auf Löschfunktionen.");
             }
-        };
+        }
+
+        document.getElementById('deleteAllButton').addEventListener('click', function() {
+            localStorage.clear();
+            document.getElementById('catContainer').innerHTML = '';
+            alert('Alle Einträge wurden gelöscht!');
+        });
 
         document.getElementById('addButton').addEventListener('click', function() {
             document.getElementById('inputContainer').style.display = 'block';
@@ -168,24 +221,6 @@
                 alert("Bitte alle Felder ausfüllen und ein Bild hochladen.");
             }
         });
-
-        function addCatCard(name, description, image) {
-            const catContainer = document.getElementById('catContainer');
-            const newCatCard = document.createElement('div');
-            newCatCard.classList.add('cat-card');
-            newCatCard.innerHTML = `
-                <img src="${image}" alt="Bild der vermissten Katze">
-                <h2>${name}</h2>
-                <p>${description}</p>
-            `;
-            catContainer.appendChild(newCatCard);
-        }
-
-        function saveCatToLocalStorage(name, description, image) {
-            let cats = localStorage.getItem('cats') ? JSON.parse(localStorage.getItem('cats')) : [];
-            cats.push({ name, description, image });
-            localStorage.setItem('cats', JSON.stringify(cats));
-        }
     </script>
 </body>
 </html>
