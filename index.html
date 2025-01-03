@@ -33,10 +33,10 @@
             text-decoration: none;
             color: inherit;
             display: block;
+            cursor: pointer;
         }
         .cat-card:hover {
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            cursor: pointer;
         }
         .cat-card img {
             max-width: 100%;
@@ -120,6 +120,39 @@
             border-radius: 5px;
             border: 1px solid #ccc;
         }
+        /* Modales Fenster */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -133,12 +166,12 @@
 </div>
 
 <div class="container">
-    <button id="addCatButton">Hinzufügen</button>
+    <button id="addCatButton">Katze hinzufügen</button>
     <div class="add-cat-form" id="addCatForm">
-        <input type="text" id="Name" placeholder="Name" required>
-        <textarea id="Description" placeholder="Beschreibung" required></textarea>
-        <input type="text" id="catImage" placeholder="Bild URL" required>
-        <button id="saveButton">Speichern</button>
+        <input type="text" id="catName" placeholder="Name der Katze" required>
+        <textarea id="catDescription" placeholder="Beschreibung der Katze" required></textarea>
+        <input type="text" id="catImage" placeholder="Bild URL der Katze" required>
+        <button id="saveCatButton">Speichern</button>
     </div>
     <button id="deleteAllButton" style="display: none;">Alle löschen</button>
 </div>
@@ -151,8 +184,18 @@
 </div>
 
 <footer>
-    <p>&copy; 2024 Vermisste Tiere. Alle Rechte vorbehalten.</p>
+    <p>&copy; 2024 Vermisste Katzen. Alle Rechte vorbehalten.</p>
 </footer>
+
+<!-- Modal für detaillierte Ansicht -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalCatName"></h2>
+        <p id="modalCatDescription"></p>
+        <img id="modalCatImage" style="max-width: 100%; border-radius: 8px;">
+    </div>
+</div>
 
 <script>
     const ownerPassword = "admin123"; // Passwort für den Inhaber
@@ -187,6 +230,11 @@
             <button class="delete-button">Löschen</button>
         `;
         catContainer.appendChild(newCatCard);
+
+        // Event Listener für Klick auf die Katze (öffnet Modal)
+        newCatCard.addEventListener('click', function() {
+            openModal(name, description, image);
+        });
 
         newCatCard.querySelector('.delete-button').addEventListener('click', function() {
             newCatCard.remove();
@@ -258,6 +306,28 @@
             alert('Bitte füllen Sie alle Felder aus!');
         }
     });
+
+    // Öffnet das Modal mit den Katzeninformationen
+    function openModal(name, description, image) {
+        document.getElementById('modalCatName').innerText = name;
+        document.getElementById('modalCatDescription').innerText = description;
+        document.getElementById('modalCatImage').src = image;
+
+        const modal = document.getElementById('myModal');
+        modal.style.display = "block";
+
+        // Schließen des Modals
+        document.querySelector(".close").onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Wenn der Benutzer außerhalb des Modals klickt, schließen
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
 </script>
 
 </body>
