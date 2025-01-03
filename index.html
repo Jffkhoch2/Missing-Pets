@@ -33,10 +33,10 @@
             text-decoration: none;
             color: inherit;
             display: block;
-            cursor: pointer;
         }
         .cat-card:hover {
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
         }
         .cat-card img {
             max-width: 100%;
@@ -47,19 +47,6 @@
         }
         .cat-card p {
             margin: 5px 0;
-        }
-        .delete-button {
-            background-color: #ff6666;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            margin-top: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: none;
-        }
-        .delete-button:hover {
-            background-color: #cc0000;
         }
         .contact-box {
             background-color: white;
@@ -85,71 +72,6 @@
             bottom: 0;
             width: 100%;
         }
-        #deleteAllButton {
-            background-color: #ff6666;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        #deleteAllButton:hover {
-            background-color: #cc0000;
-        }
-        #addCatButton {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        #addCatButton:hover {
-            background-color: #45a049;
-        }
-        .add-cat-form {
-            margin-top: 20px;
-            display: none;
-        }
-        .add-cat-form input, .add-cat-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-            padding-top: 60px;
-        }
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover, .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -158,8 +80,8 @@
     <h1>Vermisste Katzen</h1>
 </header>
 
-<div class="container" id="catContainer">
-    <!-- Dynamische Katzenkarten werden hier eingefügt -->
+<div class="container">
+    <!-- Katzenkarten -->
     <a href="molly-details.html" target="_blank" class="cat-card">
         <img src="katze1.jpg" alt="Bild der vermissten Katze">
         <h2>Molly</h2>
@@ -167,6 +89,7 @@
         <p><strong>Ort:</strong> Berlin</p>
         <p><strong>Beschreibung:</strong> Molly ist eine schwarz-weiße Katze, sehr zutraulich und trägt ein rotes Halsband.</p>
     </a>
+
     <a href="whiskers-details.html" target="_blank" class="cat-card">
         <img src="katze2.jpg" alt="Bild der vermissten Katze">
         <h2>Whiskers</h2>
@@ -174,166 +97,18 @@
         <p><strong>Ort:</strong> München</p>
         <p><strong>Beschreibung:</strong> Whiskers ist eine graue Katze mit grünen Augen, etwas scheu und ohne Halsband.</p>
     </a>
-</div>
 
-<div class="container">
-    <button id="addCatButton">Hinzufügen</button>
-    <div class="add-cat-form" id="addCatForm">
-        <input type="text" id="catName" placeholder="Name" required>
-        <textarea id="catDescription" placeholder="Beschreibung" required></textarea>
-        <input type="text" id="catImage" placeholder="Bild URL" required>
-        <button id="saveCatButton">Speichern</button>
+    <!-- Kontaktbox -->
+    <div class="contact-box">
+        <h2>Fragen? Kontaktieren Sie uns!</h2>
+        <p><strong>Telefon:</strong> +49 12345678910</p>
+        <p><strong>Email:</strong> <a href="mailto:missingpets.vermistekatzen@gmail.com">missingpets.vermistekatzen@gmail.com</a></p>
     </div>
-    <button id="deleteAllButton" style="display: none;">Alle löschen</button>
-</div>
-
-<!-- Kontaktbox -->
-<div class="contact-box">
-    <h2>Fragen? Kontaktieren Sie uns!</h2>
-    <p><strong>Telefon:</strong> +49 12345678910</p>
-    <p><strong>Email:</strong> <a href="mailto:missingpets.vermistekatzen@gmail.com">missingpets.vermistekatzen@gmail.com</a></p>
 </div>
 
 <footer>
-    <p>&copy; 2024 Vermisste Tiere. Alle Rechte vorbehalten.</p>
+    <p>&copy; 2024 Vermisste Katzen. Alle Rechte vorbehalten.</p>
 </footer>
-
-<!-- Modal für detaillierte Ansicht -->
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 id="modalCatName"></h2>
-        <p id="modalCatDescription"></p>
-        <img id="modalCatImage" style="max-width: 100%; border-radius: 8px;">
-    </div>
-</div>
-
-<script>
-    const ownerPassword = "admin123"; // Passwort für den Inhaber
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        loadCatsFromLocalStorage();
-        checkOwnerAccess();
-    });
-
-    // Vordefinierte Katzen
-    const defaultCats = [
-        {
-            name: "Molly",
-            description: "Vermisst seit: 01. Juni 2024\nOrt: Berlin\nMolly ist eine schwarz-weiße Katze, sehr zutraulich und trägt ein rotes Halsband.",
-            image: "katze1.jpg"
-        },
-        {
-            name: "Whiskers",
-            description: "Vermisst seit: 05. Juni 2024\nOrt: München\nWhiskers ist eine graue Katze mit grünen Augen, etwas scheu und ohne Halsband.",
-            image: "katze2.jpg"
-        }
-    ];
-
-    function addCatCard(name, description, image) {
-        const catContainer = document.getElementById('catContainer');
-        const newCatCard = document.createElement('div');
-        newCatCard.classList.add('cat-card');
-        newCatCard.innerHTML = `
-            <img src="${image}" alt="Bild der vermissten Katze">
-            <h2>${name}</h2>
-            <p>${description}</p>
-            <button class="delete-button">Löschen</button>
-        `;
-        catContainer.appendChild(newCatCard);
-
-        // Event Listener für Klick auf die Katze (öffnet Modal)
-        newCatCard.addEventListener('click', function() {
-            openModal(name, description, image);
-        });
-
-        newCatCard.querySelector('.delete-button').addEventListener('click', function() {
-            newCatCard.remove();
-            deleteCatFromLocalStorage(name);
-        });
-    }
-
-    function saveCatToLocalStorage(name, description, image) {
-        let cats = JSON.parse(localStorage.getItem('cats')) || [];
-        cats.push({ name, description, image });
-        localStorage.setItem('cats', JSON.stringify(cats));
-    }
-
-    function deleteCatFromLocalStorage(name) {
-        let cats = JSON.parse(localStorage.getItem('cats')) || [];
-        cats = cats.filter(cat => cat.name !== name);
-        localStorage.setItem('cats', JSON.stringify(cats));
-    }
-
-    function loadCatsFromLocalStorage() {
-        let cats = JSON.parse(localStorage.getItem('cats')) || defaultCats;
-        cats.forEach(cat => {
-            addCatCard(cat.name, cat.description, cat.image);
-        });
-    }
-
-    // Modal-Funktion
-    function openModal(name, description, image) {
-        const modal = document.getElementById('myModal');
-        const modalCatName = document.getElementById('modalCatName');
-        const modalCatDescription = document.getElementById('modalCatDescription');
-        const modalCatImage = document.getElementById('modalCatImage');
-        
-        modalCatName.textContent = name;
-        modalCatDescription.textContent = description;
-        modalCatImage.src = image;
-
-        modal.style.display = "block";
-    }
-
-    const modal = document.getElementById("myModal");
-    const span = document.getElementsByClassName("close")[0];
-
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-
-    // Inhaber-Zugang
-    function checkOwnerAccess() {
-        const password = prompt("Bitte geben Sie das Inhaber-Passwort ein:");
-        if (password === ownerPassword) {
-            document.getElementById('deleteAllButton').style.display = 'block';
-            document.getElementById('addCatButton').style.display = 'block';
-        }
-    }
-
-    // Löschen aller Katzen
-    document.getElementById('deleteAllButton').addEventListener('click', function() {
-        if (confirm('Möchten Sie wirklich alle Katzen löschen?')) {
-            localStorage.removeItem('cats');
-            loadCatsFromLocalStorage();
-        }
-    });
-
-    // Katzen hinzufügen
-    document.getElementById('addCatButton').addEventListener('click', function() {
-        document.getElementById('addCatForm').style.display = 'block';
-    });
-
-    document.getElementById('saveCatButton').addEventListener('click', function() {
-        const name = document.getElementById('catName').value;
-        const description = document.getElementById('catDescription').value;
-        const image = document.getElementById('catImage').value;
-        
-        if (name && description && image) {
-            addCatCard(name, description, image);
-            saveCatToLocalStorage(name, description, image);
-            document.getElementById('addCatForm').reset();
-            document.getElementById('addCatForm').style.display = 'none';
-        }
-    });
-</script>
 
 </body>
 </html>
