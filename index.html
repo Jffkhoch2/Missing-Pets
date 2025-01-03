@@ -97,6 +97,29 @@
         #deleteAllButton:hover {
             background-color: #cc0000;
         }
+        #addCatButton {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        #addCatButton:hover {
+            background-color: #45a049;
+        }
+        .add-cat-form {
+            margin-top: 20px;
+            display: none; /* Standardmäßig verstecken */
+        }
+        .add-cat-form input, .add-cat-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
@@ -110,6 +133,13 @@
 </div>
 
 <div class="container">
+    <button id="addCatButton">Katze hinzufügen</button>
+    <div class="add-cat-form" id="addCatForm">
+        <input type="text" id="catName" placeholder="Name der Katze" required>
+        <textarea id="catDescription" placeholder="Beschreibung der Katze" required></textarea>
+        <input type="text" id="catImage" placeholder="Bild URL der Katze" required>
+        <button id="saveCatButton">Speichern</button>
+    </div>
     <button id="deleteAllButton" style="display: none;">Alle löschen</button>
 </div>
 
@@ -201,6 +231,32 @@
         localStorage.clear();
         document.getElementById('catContainer').innerHTML = '';
         alert('Alle Einträge wurden gelöscht!');
+    });
+
+    // Toggle das Hinzufügen-Formular ein- und ausblenden
+    document.getElementById('addCatButton').addEventListener('click', function() {
+        const form = document.getElementById('addCatForm');
+        form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+    });
+
+    // Speichern der neuen Katze
+    document.getElementById('saveCatButton').addEventListener('click', function() {
+        const name = document.getElementById('catName').value;
+        const description = document.getElementById('catDescription').value;
+        const image = document.getElementById('catImage').value;
+
+        if (name && description && image) {
+            addCatCard(name, description, image);
+            saveCatToLocalStorage(name, description, image);
+
+            // Formular zurücksetzen und ausblenden
+            document.getElementById('catName').value = '';
+            document.getElementById('catDescription').value = '';
+            document.getElementById('catImage').value = '';
+            document.getElementById('addCatForm').style.display = 'none';
+        } else {
+            alert('Bitte füllen Sie alle Felder aus!');
+        }
     });
 </script>
 
