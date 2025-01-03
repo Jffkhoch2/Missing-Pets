@@ -72,37 +72,109 @@
             bottom: 0;
             width: 100%;
         }
+        #inputContainer {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+        input[type="text"], input[type="file"] {
+            margin: 10px 0;
+            padding: 10px;
+            width: 80%;
+        }
+        #addButton, #finishButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #addButton:hover, #finishButton:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Vermisste Katzen</h1>
-    </header>
-    <div class="container">
-        <a href="molly-details.html" target="_blank" class="cat-card">
-            <img src="katze1.jpg" alt="Bild der vermissten Katze">
-            <h2>Molly</h2>
-            <p><strong>Vermisst seit:</strong> 01. Juni 2024</p>
-            <p><strong>Ort:</strong> Berlin</p>
-            <p><strong>Beschreibung:</strong> Molly ist eine schwarz-weiße Katze, sehr zutraulich und trägt ein rotes Halsband.</p>
-        </a>
-        <a href="whiskers-details.html" target="_blank" class="cat-card">
-            <img src="katze2.jpg" alt="Bild der vermissten Katze">
-            <h2>Whiskers</h2>
-            <p><strong>Vermisst seit:</strong> 05. Juni 2024</p>
-            <p><strong>Ort:</strong> München</p>
-            <p><strong>Beschreibung:</strong> Whiskers ist eine graue Katze mit grünen Augen, etwas scheu und ohne Halsband.</p>
-        </a>
 
-        <!-- Kontaktbox -->
-        <div class="contact-box">
-            <h2>Fragen? Kontaktieren Sie uns!</h2>
-            <p><strong>Telefon:</strong> +49 12345678910</p>
-            <p><strong>Email:</strong> <a href="mailto:missingpets.vermistekatzen@gmail.com">missingpets.vermistekatzen@gmail.com</a></p>
-        </div>
-    </div>
-    <footer>
-        <p>&copy; 2024 Vermisste Katzen. Alle Rechte vorbehalten.</p>
-    </footer>
+<header>
+    <h1>Vermisste Katzen</h1>
+</header>
+
+<div class="container" id="catContainer">
+    <a href="molly-details.html" target="_blank" class="cat-card">
+        <img src="katze1.jpg" alt="Bild der vermissten Katze">
+        <h2>Molly</h2>
+        <p><strong>Vermisst seit:</strong> 01. Juni 2024</p>
+        <p><strong>Ort:</strong> Berlin</p>
+        <p><strong>Beschreibung:</strong> Molly ist eine schwarz-weiße Katze, sehr zutraulich und trägt ein rotes Halsband.</p>
+    </a>
+    <a href="whiskers-details.html" target="_blank" class="cat-card">
+        <img src="katze2.jpg" alt="Bild der vermissten Katze">
+        <h2>Whiskers</h2>
+        <p><strong>Vermisst seit:</strong> 05. Juni 2024</p>
+        <p><strong>Ort:</strong> München</p>
+        <p><strong>Beschreibung:</strong> Whiskers ist eine graue Katze mit grünen Augen, etwas scheu und ohne Halsband.</p>
+    </a>
+</div>
+
+<!-- Hinzufügen Button -->
+<div style="text-align: center;">
+    <button id="addButton">Hinzufügen</button>
+</div>
+
+<!-- Eingabefelder -->
+<div id="inputContainer">
+    <input type="text" id="catNameInput" placeholder="Name der Katze">
+    <input type="text" id="catDescriptionInput" placeholder="Beschreibung">
+    <input type="file" id="catImageInput">
+    <button id="finishButton">Fertig</button>
+</div>
+
+<div class="contact-box">
+    <h2>Fragen? Kontaktieren Sie uns!</h2>
+    <p><strong>Telefon:</strong> +49 12345678910</p>
+    <p><strong>Email:</strong> <a href="mailto:missingpets.vermistekatzen@gmail.com">missingpets.vermistekatzen@gmail.com</a></p>
+</div>
+
+<footer>
+    <p>&copy; 2024 Vermisste Katzen. Alle Rechte vorbehalten.</p>
+</footer>
+
+<script>
+    // "Hinzufügen"-Button zeigt die Eingabefelder
+    document.getElementById('addButton').addEventListener('click', function() {
+        document.getElementById('inputContainer').style.display = 'block';
+        document.getElementById('addButton').style.display = 'none';
+    });
+
+    // "Fertig"-Button fügt eine neue Katzenkarte hinzu
+    document.getElementById('finishButton').addEventListener('click', function() {
+        const name = document.getElementById('catNameInput').value;
+        const description = document.getElementById('catDescriptionInput').value;
+        const imageFile = document.getElementById('catImageInput').files[0];
+
+        if (name && description && imageFile) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const catContainer = document.getElementById('catContainer');
+                const newCatCard = document.createElement('a');
+                newCatCard.classList.add('cat-card');
+                newCatCard.href = "#";
+                newCatCard.innerHTML = `
+                    <img src="${e.target.result}" alt="Bild der vermissten Katze">
+                    <h2>${name}</h2>
+                    <p>${description}</p>
+                `;
+                catContainer.appendChild(newCatCard);
+            };
+            reader.readAsDataURL(imageFile);
+        } else {
+            alert("Bitte alle Felder ausfüllen und ein Bild hochladen.");
+        }
+    });
+</script>
+
 </body>
 </html>
+
